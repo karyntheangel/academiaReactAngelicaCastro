@@ -1,35 +1,31 @@
 import { useState } from "react";
 const Buttons = () => {
-  const [countState, setCountState] = useState(0);
-  //const [visible, setVisible] = useState(true);
+  //const [countState, setCountState] = useState();
+  const [state, setState] = useState({
+    count:0,
+    disabled: true
+  });
   const operationHandler = (operation) => {
-    if (operation === "increase") {
-      setCountState((prev) => prev + 1);
-    }
-
-    if (operation === "set0") {
-      setCountState(0);
-    }
-    if (operation === "decrease") {
-      setCountState(countState - 1);
-    }
+    operation === 'increase' && setState(prev =>({count:prev.count +1, disabled:false}));
+    operation === 'set0' && setState({count:0, disabled: true});
+    operation === 'decrease' && setState(prev => ({count:prev.count -1, disabled: !(prev.count-1) }));
   };
 
   return (
     <div className="btns">
-      <div className="outputCount">Contador se encuentra en {countState}</div>
+      <div className="outputCount">Contador se encuentra en {state.count}</div>
       <button
-        disabled={!countState}
+        disabled={state.disabled}
         className="countBtn"
         onClick={() => operationHandler("decrease")}
       >
-        Substract
+        Decrease
       </button>
       <button className="countBtn" onClick={() => operationHandler("set0")}>
         Reset
       </button>
       <button className="countBtn" onClick={() => operationHandler("increase")}>
-        Add
+        Increase
       </button>
     </div>
   );
